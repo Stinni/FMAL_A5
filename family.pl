@@ -20,3 +20,6 @@ parent(X, Y) :- father(X,Y).
 parent(X, Y) :- mother(X,Y).
 
 son(X, Y) :- father(Y,X), man(X).
+son(X, Y) :- mother(Y,X), man(X).
+daughter(X, Y) :- mother(Y,X), woman(X).
+daughter(X, Y) :- father(Y,X), woman(X).
