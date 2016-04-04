@@ -1,19 +1,13 @@
-/**
-* Student: Kristinn Heidar Freysteinsson
-* Kt.: 011081-3209
-* Username: kristinnf13
-* Email: kristinnf13@ru.is
-*/
-
-/** 1. The Dinner Party Murder */
-affair().
-married().
-rich().
-greedy().
+affair(Steve, Jane).
+affair(Jane, Steve).
+affair(Mary, Steve).
+affair(Steve, Mary).
+married(Tom, Jane).
+married(Jane, Tom).
+rich(Steve).
 dead(Steve).
-hates() ::- married().
-suspect(X) ::- hates().
-suspect(X) ::- greedy(), not(rich()).
+greedy(John).
 
-/** 2. Number of elements in a list */
-
+hates(X, Y) :- married(X,_), affair(_,Y).
+suspect(X) :- hates(X,_), dead(_).
+suspect(X) :- greedy(X), not(rich(X)), dead(_), rich(_).
