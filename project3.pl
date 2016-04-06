@@ -81,27 +81,9 @@ leaves(t(X, nil, nil), [X]) :- !.
 leaves(t(_, L, R), Lis) :- leaves(L, Llis), leaves(R, Rlis), append(Llis, Rlis, Lis).
 
 /** 5. Context-Free Grammar */
-num([X]) :- number(X).
-factor(X) :- append(['('], [Y|[')']], X), expr(Y).
+factor([X]) :- number(X).
+factor(X) :- append(['('|Y], [')'], X), expr(Y).
 term(X) :- factor(X).
-term(X) :- num(X).
-term(X) :- append(Y, [*|[Z]], X), factor(Y), term([Z]).
-term(X) :- append(Y, [*|[Z]], X), num(Y), term([Z]).
+term(X) :- append(Y, [*|Z], X), factor(Y), term(Z).
 expr(X) :- term(X).
-expr(X) :- append(Y, [+|[Z]], X), term(Y), expr([Z]).
-
-
-/**
-<expr> ::= <term> | <term> + <expr>
-<term> ::= <factor> | <factor> * <term>
-<factor> ::= <num> | ( <expr> )
-*/
-
-/** TODO: DELETE!!! DELETE!!! DELETE!!!
-<expr>	::=	<num> | <num> + <expr> | <num> - <expr>
-
-expr(L) :- num(L).
-expr(L) :- append(L1, [+|L2], L), num(L1), expr(L2).
-expr(L) :- append(L1, [-|L2], L), num(L1), expr(L2).
-num([D]) :- number(D).
-*/
+expr(X) :- append(Y, [+|Z], X), term(Y), expr(Z).
